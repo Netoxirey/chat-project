@@ -1,5 +1,5 @@
 # Multi-stage build for production
-FROM node:18-alpine AS builder
+FROM node:20-bullseye-slim AS builder
 
 # Set working directory
 WORKDIR /app
@@ -22,10 +22,13 @@ RUN cd server && npx prisma generate
 RUN npm run build:client
 
 # Production stage
-FROM node:18-alpine AS production
+FROM node:20-bullseye-slim AS production
 
 # Set working directory
 WORKDIR /app
+
+# Ensure OpenSSL is available for Prisma at runtime
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Copy package files
 COPY package*.json ./
@@ -53,6 +56,7 @@ EXPOSE 3000
 
 # Set environment to production
 ENV NODE_ENV=production
+ENV PRISMA_CLIENT_ENGINE_TYPE=binary
 
 # Start the application
 CMD ["npm", "run", "start"]
