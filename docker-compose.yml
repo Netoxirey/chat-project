@@ -44,7 +44,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./server/.env.production:/app/server/.env:ro
+      - ./server/.env:/app/server/.env:ro
 
 volumes:
   postgres_data:

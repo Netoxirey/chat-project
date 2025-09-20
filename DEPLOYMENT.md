@@ -13,7 +13,7 @@ This guide explains how to deploy the Chat Application to production.
 ### 1. Install Dependencies
 
 ```bash
-npm run install:all
+npm install
 ```
 
 ### 2. Build for Production
@@ -104,9 +104,9 @@ docker run -p 3000:3000 \
 ## Available Scripts
 
 ### Root Level
-- `npm run install:all` - Install all dependencies
+- `npm install` - Install all dependencies (using workspaces)
 - `npm run dev` - Start development servers
-- `npm run build` - Build React app for production
+- `npm run build` - Build both client and server for production
 - `npm run start:prod` - Build and start production server
 - `npm run test` - Run all tests
 - `npm run lint` - Run linting

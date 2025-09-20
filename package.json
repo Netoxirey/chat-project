@@ -2,16 +2,22 @@
   "name": "chat-project",
   "version": "1.0.0",
   "description": "Full-stack chat application with React and Express",
-  "main": "server/src/server.js",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
-    "build": "npm run build:client",
+    "build": "npm run build:client && npm run build:server",
     "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
     "start": "cd server && npm start",
     "start:prod": "npm run build && npm run start",
+    "install:all": "npm install",
+    "clean": "cd client && rm -rf dist && cd ../server && rm -rf dist",
     "test": "npm run test:client && npm run test:server",
     "test:client": "cd client && npm test",
     "test:server": "cd server && npm test",
@@ -31,8 +37,9 @@
   "devDependencies": {
     "concurrently": "^8.2.2"
   },
-  "dependencies": {
-    "socket.io-client": "^4.8.1"
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "keywords": [
     "chat",
