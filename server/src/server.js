@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 require('dotenv').config();
 const http = require('http');
 
@@ -69,7 +70,18 @@ app.use('/api/users', userRoutes); // User routes (supports both header and cook
 app.use('/api/messages', messageRoutes); // Message routes (supports both header and cookie auth)
 app.use('/api/chat-rooms', chatRoomRoutes); // Chat room routes (supports both header and cookie auth)
 
-// Error handling middleware
+// Serve static files from React build in production
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the React build directory
+  app.use(express.static(path.join(__dirname, '../../client/dist')));
+
+  // Handle React routing - send all non-API requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+  });
+}
+
+// Error handling middleware (must be after static file serving)
 app.use(notFound);
 app.use(errorHandler);
 

@@ -18,17 +18,6 @@ export const loginUser = createAsyncThunk(
   }
 )
 
-export const registerUser = createAsyncThunk(
-  'auth/registerUser',
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await api.post('/cookie-auth/register', userData)
-      return response.data
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Registration failed')
-    }
-  }
-)
 
 export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
@@ -96,22 +85,6 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
-        state.isAuthenticated = false
-      })
-      // Register
-      .addCase(registerUser.pending, (state) => {
-        state.isLoading = true
-        state.error = null
-      })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload.data.user
-        state.isAuthenticated = true
-        state.error = null
-      })
-      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
         state.isAuthenticated = false

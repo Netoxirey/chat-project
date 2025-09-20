@@ -10,18 +10,10 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material'
-import { loginUser, registerUser, getCurrentUser } from '../store/slices/authSlice'
+import { loginUser, getCurrentUser } from '../store/slices/authSlice'
 
 const TestAuthPage = () => {
   const [loginData, setLoginData] = useState({ email: '', password: '' })
-  const [registerData, setRegisterData] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  })
   const dispatch = useDispatch()
   const { user, isAuthenticated, isLoading, error } = useSelector((state) => state.auth)
 
@@ -35,15 +27,6 @@ const TestAuthPage = () => {
     }
   }
 
-  const handleRegister = async (e) => {
-    e.preventDefault()
-    try {
-      await dispatch(registerUser(registerData)).unwrap()
-      console.log('Registration successful!')
-    } catch (error) {
-      console.error('Registration failed:', error)
-    }
-  }
 
   const handleCheckAuth = async () => {
     try {
@@ -83,102 +66,38 @@ const TestAuthPage = () => {
         {isLoading && <CircularProgress size={24} />}
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 4 }}>
-        {/* Login Form */}
-        <Paper sx={{ p: 3, flex: 1 }}>
-          <Typography variant="h6" gutterBottom>
+      {/* Login Form */}
+      <Paper sx={{ p: 3, maxWidth: 400, mx: 'auto' }}>
+        <Typography variant="h6" gutterBottom>
+          Login
+        </Typography>
+        <Box component="form" onSubmit={handleLogin}>
+          <TextField
+            fullWidth
+            label="Email"
+            value={loginData.email}
+            onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+            margin="normal"
+          />
+          <TextField
+            fullWidth
+            label="Password"
+            type="password"
+            value={loginData.password}
+            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+            margin="normal"
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{ mt: 2 }}
+            disabled={isLoading}
+          >
             Login
-          </Typography>
-          <Box component="form" onSubmit={handleLogin}>
-            <TextField
-              fullWidth
-              label="Email"
-              value={loginData.email}
-              onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Password"
-              type="password"
-              value={loginData.password}
-              onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-              margin="normal"
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{ mt: 2 }}
-              disabled={isLoading}
-            >
-              Login
-            </Button>
-          </Box>
-        </Paper>
-
-        {/* Register Form */}
-        <Paper sx={{ p: 3, flex: 1 }}>
-          <Typography variant="h6" gutterBottom>
-            Register
-          </Typography>
-          <Box component="form" onSubmit={handleRegister}>
-            <TextField
-              fullWidth
-              label="First Name"
-              value={registerData.firstName}
-              onChange={(e) => setRegisterData({ ...registerData, firstName: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Last Name"
-              value={registerData.lastName}
-              onChange={(e) => setRegisterData({ ...registerData, lastName: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Username"
-              value={registerData.username}
-              onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Email"
-              value={registerData.email}
-              onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Password"
-              type="password"
-              value={registerData.password}
-              onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Confirm Password"
-              type="password"
-              value={registerData.confirmPassword}
-              onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
-              margin="normal"
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{ mt: 2 }}
-              disabled={isLoading}
-            >
-              Register
-            </Button>
-          </Box>
-        </Paper>
-      </Box>
+          </Button>
+        </Box>
+      </Paper>
     </Container>
   )
 }

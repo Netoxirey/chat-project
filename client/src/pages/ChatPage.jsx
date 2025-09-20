@@ -249,16 +249,6 @@ const ChatPage = () => {
             </Typography>
           </Box>
         </Box>
-        
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Chip label="Certified" size="small" sx={{ bgcolor: '#2a2a2a', color: 'white' }} />
-          <Chip label="Personalized" size="small" sx={{ bgcolor: '#2a2a2a', color: 'white' }} />
-          <Chip label="Experienced" size="small" sx={{ bgcolor: '#2a2a2a', color: 'white' }} />
-          <Chip label="Helpful" size="small" sx={{ bgcolor: '#2a2a2a', color: 'white' }} />
-          <IconButton sx={{ color: 'white' }}>
-            <MoreVert />
-          </IconButton>
-        </Box>
       </Box>
 
       {/* Messages Area */}

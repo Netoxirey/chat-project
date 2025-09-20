@@ -30,7 +30,7 @@ const MockProvider = ({ children, store }) => (
 )
 
 describe('LoginPage', () => {
-  it('renders login form', () => {
+  it('renders demo login page with user buttons', () => {
     const store = createMockStore()
     
     render(
@@ -39,29 +39,10 @@ describe('LoginPage', () => {
       </MockProvider>
     )
 
-    expect(screen.getByText('Sign In')).toBeInTheDocument()
-    expect(screen.getByLabelText('Email Address')).toBeInTheDocument()
-    expect(screen.getByLabelText('Password')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Sign In' })).toBeInTheDocument()
-  })
-
-  it('shows validation errors for invalid input', async () => {
-    const user = userEvent.setup()
-    const store = createMockStore()
-    
-    render(
-      <MockProvider store={store}>
-        <LoginPage />
-      </MockProvider>
-    )
-
-    const submitButton = screen.getByRole('button', { name: 'Sign In' })
-    await user.click(submitButton)
-
-    await waitFor(() => {
-      expect(screen.getByText('Email is required')).toBeInTheDocument()
-      expect(screen.getByText('Password is required')).toBeInTheDocument()
-    })
+    expect(screen.getByText('Demo Login')).toBeInTheDocument()
+    expect(screen.getByText('Choose a demo user to login with')).toBeInTheDocument()
+    expect(screen.getByText('Login as John')).toBeInTheDocument()
+    expect(screen.getByText('Login as Jane')).toBeInTheDocument()
   })
 
   it('shows error message from Redux state', () => {
@@ -89,11 +70,12 @@ describe('LoginPage', () => {
       </MockProvider>
     )
 
-    expect(screen.getByRole('progressbar')).toBeInTheDocument()
+    // Should show loading indicators in the buttons
+    const loadingIndicators = screen.getAllByRole('progressbar')
+    expect(loadingIndicators).toHaveLength(2) // One for each user button
   })
 
-  it('navigates to register page when clicking sign up link', async () => {
-    const user = userEvent.setup()
+  it('renders John and Jane user buttons with correct information', () => {
     const store = createMockStore()
     
     render(
@@ -102,10 +84,7 @@ describe('LoginPage', () => {
       </MockProvider>
     )
 
-    const signUpLink = screen.getByText('Sign Up')
-    await user.click(signUpLink)
-
-    // In a real test, you would check if navigation occurred
-    // This would require mocking useNavigate
+    expect(screen.getByText('John Doe')).toBeInTheDocument()
+    expect(screen.getByText('Jane Smith')).toBeInTheDocument()
   })
 })
