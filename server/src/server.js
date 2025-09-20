@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-require('dotenv').config();
 const http = require('http');
 
 const { errorHandler, notFound } = require('./utils/errorHandler');
@@ -15,6 +14,10 @@ const userRoutes = require('./routes/userRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const chatRoomRoutes = require('./routes/chatRoomRoutes');
 const { initializeSocket } = require('./socket/socketHandler');
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
