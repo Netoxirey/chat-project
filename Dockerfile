@@ -59,4 +59,4 @@ ENV NODE_ENV=production
 ENV PRISMA_CLIENT_ENGINE_TYPE=binary
 
 # Start the application
-CMD ["npm", "run", "start"]
+CMD ["node", "server/start.js"]
