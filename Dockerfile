@@ -43,9 +43,9 @@ COPY --from=builder /app/server/src ./server/src
 COPY --from=builder /app/server/start.js ./server/start.js
 COPY --from=builder /app/server/prisma ./server/prisma
 
-# Create non-root user
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodejs -u 1001
+# Create non-root user (Debian-based image)
+RUN groupadd -g 1001 nodejs \
+  && useradd -u 1001 -g nodejs -m -s /bin/bash nodejs
 
 # Change ownership of the app directory
 RUN chown -R nodejs:nodejs /app
