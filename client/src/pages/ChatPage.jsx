@@ -19,7 +19,7 @@ import {
   AttachFile,
   Mic,
   MoreVert,
-  SmartToy,
+  Chat,
 } from '@mui/icons-material'
 import { fetchMessages, sendMessage } from '../store/slices/messagesSlice'
 import { useAuth } from '../hooks/useAuth'
@@ -216,27 +216,36 @@ const ChatPage = () => {
     )
   }
 
-  return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#1a1a1a' }}>
-      {/* Chat Header */}
+    return (
       <Box sx={{ 
-        p: 2, 
-        borderBottom: '1px solid #333', 
+        height: '100vh', 
         display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-between',
-        bgcolor: '#1a1a1a'
+        flexDirection: 'column', 
+        bgcolor: '#1a1a1a',
+        width: '100%',
+        maxWidth: '100%',
+        overflow: 'hidden'
       }}>
+        {/* Chat Header */}
+        <Box sx={{ 
+          p: 2, 
+          borderBottom: '1px solid #333', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          bgcolor: '#1a1a1a',
+          flexShrink: 0
+        }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton sx={{ mr: 1, color: 'white' }}>
-            <SmartToy />
+            <Chat />
           </IconButton>
           <Box>
             <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
-              GPT-5
+              Chat Room
             </Typography>
             <Typography variant="body2" sx={{ color: '#999' }}>
-              Updated hace 1 segundo · {messages.length} messages
+              {messages.length} messages
             </Typography>
           </Box>
         </Box>
@@ -259,7 +268,10 @@ const ChatPage = () => {
         p: 2,
         display: 'flex',
         flexDirection: 'column',
-        gap: 2
+        gap: 2,
+        width: '100%',
+        maxWidth: '100%',
+        minHeight: 0
       }}>
         {messages.length === 0 ? (
           <Box sx={{ 
@@ -320,7 +332,10 @@ const ChatPage = () => {
       <Box sx={{ 
         p: 2, 
         borderTop: '1px solid #333',
-        bgcolor: '#1a1a1a'
+        bgcolor: '#1a1a1a',
+        width: '100%',
+        maxWidth: '100%',
+        flexShrink: 0
       }}>
         <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1 }}>
           <IconButton sx={{ color: '#999' }}>
