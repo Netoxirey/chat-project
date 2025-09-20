@@ -4,8 +4,8 @@
   "description": "Modern chat API backend with Node.js, Express, and Socket.io",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "start:prod": "NODE_ENV=production node src/server.js",
+    "start": "node start.js",
+    "start:prod": "cross-env NODE_ENV=production node start.js",
     "dev": "nodemon src/server.js",
     "build": "prisma generate",
     "deploy": "npm run build && npm run db:migrate:deploy && npm run start:prod",
@@ -50,6 +50,7 @@
     "socket.io": "^4.7.4"
   },
   "devDependencies": {
+    "cross-env": "^10.0.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

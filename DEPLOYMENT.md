@@ -16,13 +16,7 @@ This guide explains how to deploy the Chat Application to production.
 npm install
 ```
 
-### 2. Build for Production
-
-```bash
-npm run build
-```
-
-### 3. Set Up Environment Variables
+### 2. Set Up Environment Variables
 
 Copy the production environment template:
 
@@ -47,7 +41,7 @@ NODE_ENV="production"
 CORS_ORIGIN="https://yourdomain.com,https://www.yourdomain.com"
 ```
 
-### 4. Database Setup
+### 3. Database Setup
 
 ```bash
 # Run migrations
@@ -57,10 +51,25 @@ npm run db:migrate
 npm run db:seed:prod
 ```
 
-### 5. Start Production Server
+### 4. Start Production Server
 
 ```bash
+# Option 1: Using the convenient scripts
+# Windows PowerShell
+.\start-prod.ps1
+
+# Linux/Mac
+./start-prod.sh
+
+# Option 2: Using npm scripts
 npm run start:prod
+
+# Option 3: Manual start with environment variable
+# Windows PowerShell
+$env:NODE_ENV="production"; npm run start
+
+# Linux/Mac
+NODE_ENV=production npm run start
 ```
 
 ## Docker Deployment

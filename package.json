@@ -15,7 +15,7 @@
     "build:client": "cd client && npm run build",
     "build:server": "cd server && npm run build",
     "start": "cd server && npm start",
-    "start:prod": "npm run build && npm run start",
+    "start:prod": "npm run build && cd server && npm run start:prod",
     "install:all": "npm install",
     "clean": "cd client && rm -rf dist && cd ../server && rm -rf dist",
     "test": "npm run test:client && npm run test:server",

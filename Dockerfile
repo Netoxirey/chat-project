@@ -15,6 +15,9 @@ RUN npm install
 # Copy source code
 COPY . .
 
+# Generate Prisma client
+RUN cd server && npx prisma generate
+
 # Build client
 RUN npm run build:client
 
@@ -34,8 +37,8 @@ RUN npm install --workspace=server --only=production
 # Copy built client and server source
 COPY --from=builder /app/client/dist ./client/dist
 COPY --from=builder /app/server/src ./server/src
+COPY --from=builder /app/server/start.js ./server/start.js
 COPY --from=builder /app/server/prisma ./server/prisma
-COPY --from=builder /app/server/node_modules/.prisma ./server/node_modules/.prisma
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
