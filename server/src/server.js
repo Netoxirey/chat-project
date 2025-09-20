@@ -20,7 +20,24 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Security middleware
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'same-origin' },
+    crossOriginOpenerPolicy: { policy: 'same-origin' },
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "default-src": ["'self'"],
+        // Allow API and websocket connections from same-origin
+        "connect-src": ["'self'"],
+        // Allow loading static assets served by Express
+        "img-src": ["'self'", 'data:'],
+        "script-src-attr": ["'none'"],
+      },
+    },
+  })
+);
 
 // CORS configuration
 app.use(

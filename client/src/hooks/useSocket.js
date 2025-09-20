@@ -9,19 +9,24 @@ export const useSocket = () => {
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      // Connect to socket server (ensure pure origin, no path)
-      const rawUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'
+      // Connect to same-origin by default (CSP-friendly). If VITE_API_BASE_URL
+      // is provided, extract only the origin.
+      const rawUrl = import.meta.env.VITE_API_BASE_URL || ''
       let serverUrl
-      try {
-        const u = new URL(rawUrl)
-        serverUrl = `${u.protocol}//${u.host}`
-      } catch {
-        serverUrl = 'http://localhost:3000'
+      if (rawUrl) {
+        try {
+          const u = new URL(rawUrl)
+          serverUrl = `${u.protocol}//${u.host}`
+        } catch {
+          serverUrl = ''
+        }
+      } else {
+        serverUrl = ''
       }
       console.log('Connecting to Socket.io server:', serverUrl)
       console.log('User:', user)
       
-      const instance = io(serverUrl, {
+      const instance = io(serverUrl || undefined, {
         withCredentials: true,
         autoConnect: true,
         transports: ['polling', 'websocket'],
